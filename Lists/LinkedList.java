@@ -13,20 +13,35 @@ public class LinkedList {
   }
 
   public void push(int data) {
-    Node temp = new Node();
+    Node temp = new Node(data);
 
     if(first == null) {
       first = temp;
     } else {
       last.setNext(temp);
     }
-    last.setPrev(last);
+    temp.setPrev(last);
     last = temp;
     size++;
   }
 
   public void display() {
-    
+    String hold = "";
+    if(first != null) {
+      Node temp = first;
+      while(temp != null) {
+        hold = hold + (temp.getData() + " ");
+        temp = temp.getNext();
+      }
+      System.out.println(hold + "\n");
+      hold = "";
+      temp = last;
+      while(temp != null) {
+        hold = hold + (temp.getData() + " ");
+        temp = temp.getPrev();
+      }
+      System.out.println(hold + "\n");
+    }
   }
 
 }
