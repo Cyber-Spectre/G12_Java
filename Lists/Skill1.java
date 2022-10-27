@@ -4,13 +4,18 @@ public class Skill1 {
 
   public static void main(String[] args) {
     LinkedList list = new LinkedList();
-    list.push(1);
-    list.push(2);
-    list.push(3);
-    list.push(4);
-    list.push(5);
-    list.push(6);
-    list.display();
+    list.add("p");
+    list.add("o");
+    list.add("t");
+    list.add("a");
+    list.add("t");
+    list.add("o");
+    System.out.println(list.toString());
+    if(list.size() != -1) {
+      System.out.println("The list has a size of " + list.size());
+    } else {
+      System.out.println("The list is empty");
+    }
   }
   
 }

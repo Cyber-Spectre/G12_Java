@@ -2,25 +2,25 @@ package G12_Java.Lists;
 
 public class Node {
 
-  private int data;
+  private String data;
   private Node next;
   private Node prev;
 
   public Node() {
-    data = -1;
+    data = "";
     next = null;
     prev = null;
   }
 
-  public Node(int data) {
+  public Node(String data) {
     this.data = data;
   }
 
-  public int getData() {
+  public String getData() {
     return data;
   }
 
-  public void setData(int data) {
+  public void setData(String data) {
     this.data = data;
   }
 
