@@ -29,7 +29,7 @@ public class LinkedList {
 
   }
 
-  public String toString() { //?displays the list forward and backward
+  public String toString() { //?returns the list forward and backward
     String hold = "";
     if(first != null) {
       Node temp = first;
@@ -49,9 +49,9 @@ public class LinkedList {
     return hold;
   }
 
-  public int size() {
+  public int size() { //?returns the size of the list
     if(first != null) {
-      int size = 0;
+      size = 0;
       Node temp = first;
       while(temp != null) {
         size++;
@@ -59,7 +59,46 @@ public class LinkedList {
       }
       return size;
     } else {
-      return -1;
+      return 0;
+    }
+  }
+
+  public void clear() { //?clears the list
+
+  }
+
+  public String get(int ind) { //?gets element at list index
+
+  }
+
+  public void set(int ind, String data) { //?sets the element at list index
+    if(first != null) {
+      Node temp = first;
+
+      int x = 1;
+      while(x != (ind)) {
+        temp = temp.getNext();
+        x++;
+      }
+
+    }
+  }
+
+  public void remove(int ind) { //?removes element at list index
+    if(first != null) {
+      if(ind > list.size()){
+        System.out.println("Index out of bounds");
+        break;
+      }
+      Node temp = first;
+
+      int x = 1;
+      while(x != (ind)) {
+        temp = temp.getNext();
+        x++;
+      }
+      temp.getNext().setPrev(temp.getPrev());
+      temp.getPrev().setNext(temp.getNext());
     }
   }
 
