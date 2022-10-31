@@ -2,9 +2,9 @@ package G12_Java.Lists;
 
 public class LinkedList {
 
-  private Node first;
-  private Node last;
-  private int size;
+  protected Node first;
+  protected Node last;
+  protected int size;
 
   public LinkedList() {
     first = null;
@@ -68,7 +68,7 @@ public class LinkedList {
   }
 
   public String get(int ind) { //?gets element at list index
-
+    return "";
   }
 
   public void set(int ind, String data) { //?sets the element at list index
@@ -86,9 +86,9 @@ public class LinkedList {
 
   public void remove(int ind) { //?removes element at list index
     if(first != null) {
-      if(ind > list.size()){
+      if(ind >= size){
         System.out.println("Index out of bounds");
-        break;
+        return;
       }
       Node temp = first;
 
@@ -99,6 +99,8 @@ public class LinkedList {
       }
       temp.getNext().setPrev(temp.getPrev());
       temp.getPrev().setNext(temp.getNext());
+    } else {
+      System.out.println("The list is empty");
     }
   }
 

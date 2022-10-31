@@ -46,7 +46,7 @@ public class Skill1 {
   }
 
   public static void display() {
-    System.out.println("\n Please select an option: \n"
+    System.out.println("\nPlease select an option: \n"
       + "0: Exit \n"
       + "1: Display list (forward and backward)\n"
       + "2: List size \n"
