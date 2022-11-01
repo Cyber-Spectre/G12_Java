@@ -2,9 +2,9 @@ package G12_Java.Lists;
 
 public class LinkedList {
 
-  protected Node first;
-  protected Node last;
-  protected int size;
+  private Node first;
+  private Node last;
+  private int size;
 
   public LinkedList() {
     first = null;
@@ -25,7 +25,7 @@ public class LinkedList {
     size++;
   }
 
-  public void add(int ind, String data) {
+  public void add(int ind, String data) { //?inserts an element at the index with set value
 
   }
 
@@ -64,41 +64,82 @@ public class LinkedList {
   }
 
   public void clear() { //?clears the list
-
+    if(first != null) {
+      while(first.getNext() != null) {
+        first = first.getNext();
+        first.setPrev(null);
+        size--;
+      }
+      first = null;
+      size--;
+    } else {
+      System.out.println("Array is already clear");
+    }
   }
 
   public String get(int ind) { //?gets element at list index
-    return "";
+    if(first != null) {
+      if(ind > size) {
+        return "Index out of bounds";
+      }
+      Node temp = first;
+      int x = 1;
+
+      while(x != ind) {
+        temp = temp.getNext();
+        x++;
+      }
+      return "Index " + ind + ": " + temp.getData();
+    } else {
+      return "The list is empty";
+    }
   }
 
   public void set(int ind, String data) { //?sets the element at list index
     if(first != null) {
+      if(ind > size) {
+        System.out.println("Index out of bounds");
+      }
       Node temp = first;
-
       int x = 1;
-      while(x != (ind)) {
+
+      while(x != ind) {
         temp = temp.getNext();
         x++;
       }
-
+      temp.setData(data);
+    } else {
+      System.out.println("The list is empty");
     }
   }
 
   public void remove(int ind) { //?removes element at list index
     if(first != null) {
-      if(ind >= size){
+      if(ind > size){
         System.out.println("Index out of bounds");
         return;
       }
       Node temp = first;
 
       int x = 1;
-      while(x != (ind)) {
-        temp = temp.getNext();
-        x++;
+
+      if(size == 1) { //if list has a size of 1 (single)
+        first = null;
+        size--;
+      } else if(ind == 1) { //if index is 1 (first)
+        first = first.getNext();
+        first.setPrev(null);
+      } else if(ind == size) { //if index is same as size (last)
+        last = last.getPrev();
+        last.setNext(null);
+      } else {
+        while(x != ind) {
+          temp = temp.getNext();
+          x++;
+        }
+        temp.getNext().setPrev(temp.getPrev());
+        temp.getPrev().setNext(temp.getNext());
       }
-      temp.getNext().setPrev(temp.getPrev());
-      temp.getPrev().setNext(temp.getNext());
     } else {
       System.out.println("The list is empty");
     }
