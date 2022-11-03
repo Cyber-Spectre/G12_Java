@@ -26,7 +26,7 @@ public class LinkedList {
   }
 
   public void add(int ind, String data) { //?inserts an element at the index with set value
-
+    
   }
 
   public String toString() { //?returns the list forward and backward

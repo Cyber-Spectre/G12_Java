@@ -34,6 +34,11 @@ public class Skill1 {
           list.add(data);
           break;
         case 4:
+          System.out.println("\nInput the index you want to add the element at:");
+          ind = scan1.nextInt();
+          System.out.println("\nInput the element you want to add:");
+          data = scan1.next();
+          list.add(ind, data);
           break;
         case 5:
           System.out.println("\nInput the index you want to remove:");
