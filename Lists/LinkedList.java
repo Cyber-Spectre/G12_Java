@@ -26,7 +26,16 @@ public class LinkedList {
   }
 
   public void add(int ind, String data) { //?inserts an element at the index with set value
-    
+    if(first != null) {
+      if(ind > size) {
+        System.out.println("Index out of bounds");
+        return;
+      }
+      
+    } else {
+      System.out.println("List is empty, use option 3 to add first element");
+      return;
+    }
   }
 
   public String toString() { //?returns the list forward and backward
