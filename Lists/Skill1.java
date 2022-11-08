@@ -2,8 +2,6 @@ package G12_Java.Lists;
 
 import java.util.Scanner;
 
-import org.xml.sax.InputSource;
-
 public class Skill1 {
   public static Scanner scan1 = new Scanner(System.in);
 

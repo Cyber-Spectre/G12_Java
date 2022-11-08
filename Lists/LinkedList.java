@@ -2,14 +2,18 @@ package G12_Java.Lists;
 
 public class LinkedList {
 
-  private Node first;
-  private Node last;
-  private int size;
+  protected Node first;
+  protected Node last;
+  protected int size;
 
   public LinkedList() {
     first = null;
     last = null;
     size = 0;
+  }
+
+  public ListIterator() {
+    
   }
 
   public void add(String data) { //?inserts an element at the end of the list with a set value
@@ -31,7 +35,23 @@ public class LinkedList {
         System.out.println("Index out of bounds");
         return;
       }
+      Node temp = new Node(data);
+      last.setNext(temp);
+      temp.setPrev(last);
+      last = temp;
+      size++;
+
+      int x = size - 1;
+      temp = temp.getPrev();
       
+      while(x > ind) {
+        temp.getNext().setData(temp.getData());
+        temp = temp.getPrev();
+        x--;
+      }
+      temp.getNext().setData(temp.getData());
+      temp.setData(data);
+      return;
     } else {
       System.out.println("List is empty, use option 3 to add first element");
       return;
@@ -80,6 +100,7 @@ public class LinkedList {
         size--;
       }
       first = null;
+      last = null;
       size--;
     } else {
       System.out.println("Array is already clear");
