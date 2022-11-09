@@ -12,10 +12,6 @@ public class LinkedList {
     size = 0;
   }
 
-  public ListIterator() {
-    
-  }
-
   public void add(String data) { //?inserts an element at the end of the list with a set value
     Node temp = new Node(data);
 
