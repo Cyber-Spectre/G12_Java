@@ -179,4 +179,8 @@ public class LinkedList {
     }
   }
 
+  public void swap (Node n1, Node n2) {
+    
+  }
+
 }
