@@ -7,10 +7,13 @@ public class Skill1 {
 
   public static void main(String[] args) {
     LinkedList list = new LinkedList();
+    int input;
+    int ind;
+    String data;
     do {
       display();
 
-      int input = scan1.nextInt();
+      input = scan1.nextInt();
 
       switch(input) {
         case 0:
@@ -27,21 +30,37 @@ public class Skill1 {
           break;
         case 4:
           System.out.println("\nInput the element you want to add:");
-          String data = scan1.next();
+          data = scan1.next();
           list.add(data);
           break;
         case 5:
+          System.out.println("\nInput the index you want to add the element at:");
+          ind = scan1.nextInt();
+          System.out.println("\nInput the element you want to add:");
+          data = scan1.next();
+          list.add(ind, data);
+          data = scan1.next();
+          list.add(data);
           break;
         case 6:
           System.out.println("\nInput the index you want to remove:");
-          int ind = scan1.nextInt();
+          ind = scan1.nextInt();
           list.remove(ind);
           break;
         case 7:
+          list.clear();
           break;
         case 8:
+          System.out.println("\nInput the index you want the element of:");
+          ind = scan1.nextInt();
+          System.out.println(list.get(ind));
           break;
         case 9:
+          System.out.println("\nInput the index you want to set:"); 
+          ind = scan1.nextInt();
+          System.out.println("\nInput the element you want to set it as:");
+          data = scan1.next();
+          list.set(ind, data);
           break;
       }
     }
