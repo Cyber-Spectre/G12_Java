@@ -1,4 +1,4 @@
-package G12_Java.Lists;
+package Lists;
 
 public class LinkedList {
 
@@ -179,8 +179,53 @@ public class LinkedList {
     }
   }
 
-  public void swap (Node n1, Node n2) {
-    
+  public void swap(int ind, int ind2) { //?swaps position of two nodes
+    if(first != null) {
+      if(ind > size) {
+        System.out.println("Index out of bounds (ind > size)");
+      } else if(ind <= 0) {
+        System.out.println("Index out of bounds (ind <= 0)");
+      } else if(ind2 > size) {
+        System.out.println("Index out of bounds (ind2 > size)");
+      } else if(ind2 <= 0) {
+        System.out.println("Index out of bounds (ind2 <= 0)");
+      } else {
+        Node temp = first;
+        Node hold = first;
+        int x = 1;
+        if(ind2 > ind) {
+          while(x != ind2) {
+            temp = temp.getNext();
+            x++;
+          }
+
+        } else {
+          while(x != ind) {
+            temp = temp.getNext();
+            x++;
+          }
+          while(x != ind2) {
+            hold.setData(temp.getPrev().getData());
+            temp.getPrev().setData(temp.getData());
+            temp.setData(hold.getData());
+            temp = temp.getPrev();
+            x--;
+          }
+          temp.setData(hold.getData());
+          temp = temp.getNext();
+          x++;
+          while(x != ind) {
+            hold.setData(temp.getNext().getData());
+            temp.getNext().setData(temp.getData());
+            temp.setData(hold.getData());
+            temp = temp.getNext();
+            x++;
+          }
+        }
+      }
+    } else {
+      System.out.println("The list is empty");
+    }
   }
 
 }

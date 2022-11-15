@@ -1,4 +1,4 @@
-package G12_Java.Lists;
+package Lists;
 
 public class Node {
 

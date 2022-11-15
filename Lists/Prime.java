@@ -1,4 +1,4 @@
-package G12_Java.Lists;
+package Lists;
 
 public class Prime {
   
@@ -6,8 +6,7 @@ public class Prime {
     LinkedList list = new LinkedList();
 
     boolean isPrime;
-    list.add("1,");
-    for(int x = 3; x < 10000; x++) {
+    for(int x = 1; x < 10000; x++) {
       isPrime = true;
       for(int y = x - 1; y > 1; y--) {
         if(x % y == 0) {

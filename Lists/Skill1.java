@@ -1,4 +1,4 @@
-package G12_Java.Lists;
+package Lists;
 
 import java.util.Scanner;
 
@@ -9,6 +9,7 @@ public class Skill1 {
     LinkedList list = new LinkedList();
     int input;
     int ind;
+    int ind2;
     String data;
     do {
       display();
@@ -62,6 +63,13 @@ public class Skill1 {
           data = scan1.next();
           list.set(ind, data);
           break;
+        case 10:
+          System.out.println("\nInput the index of the first node:");
+          ind = scan1.nextInt();
+          System.out.println("Input the index of the second node:");
+          ind2 = scan1.nextInt();
+          list.swap(ind, ind2);
+          break;
       }
     }
     while(true);
@@ -78,7 +86,8 @@ public class Skill1 {
       + "6: Remove element at index \n"
       + "7: Clear list \n"
       + "8: Get element at index \n"
-      + "9: Set element at index \n");
+      + "9: Set element at index \n"
+      + "10: Swap position of two nodes\n");
   }
   
 }
