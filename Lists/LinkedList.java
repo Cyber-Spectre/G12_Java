@@ -181,25 +181,23 @@ public class LinkedList {
 
   public void swap(int ind, int ind2) { //?swaps position of two nodes
     if(first != null) {
-      if(ind > size) {
+      if(ind > size) { //I
         System.out.println("Index out of bounds (ind > size)");
-      } else if(ind <= 0) {
+      } else if(ind <= 0) { //need
         System.out.println("Index out of bounds (ind <= 0)");
-      } else if(ind2 > size) {
+      } else if(ind2 > size) { //so
         System.out.println("Index out of bounds (ind2 > size)");
-      } else if(ind2 <= 0) {
+      } else if(ind2 <= 0) { //many
         System.out.println("Index out of bounds (ind2 <= 0)");
-      } else {
+      } else if(ind == ind2){ //if/else
+        System.out.println("Indexes are the same");
+      } else { //statements
         Node temp = first;
-        Node hold = first;
+        add("please work I lose one braincell for every line of code I rewrite in an attempt to fix this"); //placeholder node
+        Node hold = last; //holds elements
         int x = 1;
-        if(ind2 > ind) {
-          while(x != ind2) {
-            temp = temp.getNext();
-            x++;
-          }
 
-        } else {
+        if(ind > ind2) { //if user inputs higher index first
           while(x != ind) {
             temp = temp.getNext();
             x++;
@@ -207,20 +205,42 @@ public class LinkedList {
           while(x != ind2) {
             hold.setData(temp.getPrev().getData());
             temp.getPrev().setData(temp.getData());
-            temp.setData(hold.getData());
             temp = temp.getPrev();
+            temp.getNext().setData(hold.getData());
             x--;
           }
-          temp.setData(hold.getData());
           temp = temp.getNext();
           x++;
           while(x != ind) {
             hold.setData(temp.getNext().getData());
             temp.getNext().setData(temp.getData());
-            temp.setData(hold.getData());
+            temp = temp.getNext();
+            temp.getPrev().setData(hold.getData());
+            x++;
+          }
+          remove(size); //removes placeholder node
+        } else {
+          while(x != ind2) {
             temp = temp.getNext();
             x++;
           }
+          while(x != ind) {
+            hold.setData(temp.getPrev().getData());
+            temp.getPrev().setData(temp.getData());
+            temp = temp.getPrev();
+            temp.getNext().setData(hold.getData());
+            x--;
+          }
+          temp = temp.getNext();
+          x++;
+          while(x != ind2) {
+            hold.setData(temp.getNext().getData());
+            temp.getNext().setData(temp.getData());
+            temp = temp.getNext();
+            temp.getPrev().setData(hold.getData());
+            x++;
+          }
+          remove(size); //removes placeholder node
         }
       }
     } else {
