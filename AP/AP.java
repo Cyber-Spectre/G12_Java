@@ -1,4 +1,4 @@
-package G12_Java.AP;
+package AP;
 
 import java.util.Scanner;
 public class AP {
