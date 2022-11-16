@@ -55,13 +55,16 @@ public class LinkedList {
   }
 
   public String toString() { //?returns the list forward
-    String hold = "";
+    String hold = "{";
     if(first != null) {
       Node temp = first;
+      hold = hold + (temp.getData());
+      temp = temp.getNext();
       while(temp != null) {
-        hold = hold + (temp.getData() + " ");
+        hold = hold + (", " + temp.getData());
         temp = temp.getNext();
       }
+      hold = hold + "}";
     } else {
       hold = "The list is empty";
     }
@@ -69,13 +72,16 @@ public class LinkedList {
   }
 
   public String toStringBack() { //?returns the list backward
-    String hold = "";
+    String hold = "{";
     if(first != null) {
       Node temp = last;
+      hold = hold + (temp.getData());
+      temp = temp.getPrev();
       while(temp != null) {
-        hold = hold + (temp.getData() + " ");
+        hold = hold + (", " + temp.getData());
         temp = temp.getPrev();
       }
+      hold = hold + "}";
     } else {
       hold = "The list is empty";
     }
@@ -179,69 +185,76 @@ public class LinkedList {
     }
   }
 
+  public void prime(int ind, int ind2) {
+    if(ind > ind2) { //if user inputs larger number first
+      int hold = ind2;
+      ind2 = ind;
+      ind = hold;
+    }
+    boolean isPrime;
+    for(int x = ind; x < ind2; x++) {
+      isPrime = true;
+      for(int y = x / 2; y > 1; y--) {
+        if(x % y == 0) {
+          isPrime = false;
+        }
+      }
+      if(isPrime) {
+        add(String.valueOf(x));
+      }
+    }
+  }
+
   public void swap(int ind, int ind2) { //?swaps position of two nodes
     if(first != null) {
+      boolean ifError = false;
       if(ind > size) { //I
         System.out.println("Index out of bounds (ind > size)");
-      } else if(ind <= 0) { //need
+        ifError = true;
+      } if(ind <= 0) { //need
         System.out.println("Index out of bounds (ind <= 0)");
-      } else if(ind2 > size) { //so
+        ifError = true;
+      } if(ind2 > size) { //so
         System.out.println("Index out of bounds (ind2 > size)");
-      } else if(ind2 <= 0) { //many
+        ifError = true;
+      } if(ind2 <= 0) { //many
         System.out.println("Index out of bounds (ind2 <= 0)");
-      } else if(ind == ind2){ //if/else
+        ifError = true;
+      } if(ind == ind2){ //if
         System.out.println("Indexes are the same");
-      } else { //statements
+        ifError = true;
+      } if(!ifError) { //statements
         Node temp = first;
-        add("please work I lose one braincell for every line of code I rewrite in an attempt to fix this"); //placeholder node
+        add("please work I lose braincells for every line of code I rewrite in an attempt to fix this"); //placeholder node
         Node hold = last; //holds elements
         int x = 1;
 
         if(ind > ind2) { //if user inputs higher index first
-          while(x != ind) {
-            temp = temp.getNext();
-            x++;
-          }
-          while(x != ind2) {
-            hold.setData(temp.getPrev().getData());
-            temp.getPrev().setData(temp.getData());
-            temp = temp.getPrev();
-            temp.getNext().setData(hold.getData());
-            x--;
-          }
-          temp = temp.getNext();
-          x++;
-          while(x != ind) {
-            hold.setData(temp.getNext().getData());
-            temp.getNext().setData(temp.getData());
-            temp = temp.getNext();
-            temp.getPrev().setData(hold.getData());
-            x++;
-          }
-          remove(size); //removes placeholder node
-        } else {
-          while(x != ind2) {
-            temp = temp.getNext();
-            x++;
-          }
-          while(x != ind) {
-            hold.setData(temp.getPrev().getData());
-            temp.getPrev().setData(temp.getData());
-            temp = temp.getPrev();
-            temp.getNext().setData(hold.getData());
-            x--;
-          }
-          temp = temp.getNext();
-          x++;
-          while(x != ind2) {
-            hold.setData(temp.getNext().getData());
-            temp.getNext().setData(temp.getData());
-            temp = temp.getNext();
-            temp.getPrev().setData(hold.getData());
-            x++;
-          }
-          remove(size); //removes placeholder node
+          int holdInd = ind2;
+          ind2 = ind;
+          ind = holdInd;
         }
+        while(x != ind2) {
+          temp = temp.getNext();
+          x++;
+        }
+        while(x != ind) {
+          hold.setData(temp.getPrev().getData());
+          temp.getPrev().setData(temp.getData());
+          temp = temp.getPrev();
+          temp.getNext().setData(hold.getData());
+          x--;
+        }
+        temp = temp.getNext();
+        x++;
+        while(x != ind2) {
+          hold.setData(temp.getNext().getData());
+          temp.getNext().setData(temp.getData());
+          temp = temp.getNext();
+          temp.getPrev().setData(hold.getData());
+          x++;
+        }
+        remove(size); //removes placeholder node
       }
     } else {
       System.out.println("The list is empty");

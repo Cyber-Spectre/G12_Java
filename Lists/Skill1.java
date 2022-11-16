@@ -64,10 +64,18 @@ public class Skill1 {
           list.set(ind, data);
           break;
         case 10:
+          System.out.println("\nInput first number to search between:");
+          ind = scan1.nextInt();
+          System.out.println("\nInput second number to search between:");
+          ind2 = scan1.nextInt();
+          list.prime(ind, ind2);
+          break;
+        case 11:
           System.out.println("\nInput the index of the first node:");
           ind = scan1.nextInt();
-          System.out.println("Input the index of the second node:");
+          System.out.println("\nInput the index of the second node:");
           ind2 = scan1.nextInt();
+          System.out.println("\n");
           list.swap(ind, ind2);
           break;
       }
@@ -76,18 +84,19 @@ public class Skill1 {
   }
 
   public static void display() {
-    System.out.println("\nPlease select an option: \n"
-      + "0: Exit \n"
+    System.out.println("\nPlease select an option:\n"
+      + "0: Exit\n"
       + "1: Display list\n"
       + "2: Display list (backwards)\n"
-      + "3: List size \n"
-      + "4: Add element to list \n"
-      + "5: Add element at index \n"
-      + "6: Remove element at index \n"
-      + "7: Clear list \n"
-      + "8: Get element at index \n"
-      + "9: Set element at index \n"
-      + "10: Swap position of two nodes\n");
+      + "3: List size\n"
+      + "4: Add element to list\n"
+      + "5: Add element at index\n"
+      + "6: Remove element at index\n"
+      + "7: Clear list\n"
+      + "8: Get element at index\n"
+      + "9: Set element at index\n"
+      + "10: Add prime numbers between two numbers to list\n"
+      + "11: Swap position of two nodes\n");
   }
   
 }
