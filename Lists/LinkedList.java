@@ -107,7 +107,7 @@ public class LinkedList {
       last = null;
       size--;
     } else {
-      System.out.println("Array is already clear");
+      System.out.println("List is already clear");
     }
   }
 
