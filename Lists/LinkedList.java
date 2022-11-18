@@ -185,7 +185,7 @@ public class LinkedList {
     }
   }
 
-  public void prime(int ind, int ind2) {
+  public void prime(int ind, int ind2) { //?adds all prime numbers between two numbers to list
     if(ind > ind2) { //if user inputs larger number first
       int hold = ind2;
       ind2 = ind;
@@ -197,6 +197,7 @@ public class LinkedList {
       for(int y = x / 2; y > 1; y--) {
         if(x % y == 0) {
           isPrime = false;
+          y = 1;
         }
       }
       if(isPrime) {
