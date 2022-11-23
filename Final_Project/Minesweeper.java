@@ -12,8 +12,7 @@ public class Minesweeper {
 
     do {
 
-    }
-    while(true);
+    } while(true);
   }
 
   public static void display() {
