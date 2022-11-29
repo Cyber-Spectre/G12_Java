@@ -21,15 +21,15 @@ public class MinesweeperTextVer {
     int mines = 0;
     switch(input) {
       case 1:
-        x = 8; y = 8;
+        y = 8; x = 8;
         mines = 10;
         break;
       case 2:
-        x = 16; y = 16;
+        y = 16; x = 16;
         mines = 40;
         break;
       case 3:
-        x = 16; y = 30;
+        y = 16; x = 30;
         mines = 99;
         break;
     }
@@ -37,16 +37,16 @@ public class MinesweeperTextVer {
     String[][] UI = new String[x][y]; //interface for user
     setup(x, y, mines, gameInfo, UI);
     displayInfo(x, y, gameInfo);
-    /*do {
+    do { 
       
-    } while(true);*/
+    } while(true);
   }
 
   public static void setup(int x, int y, int mines, String[][] gameInfo, String[][] UI) { //?sets up gameInfo array
     for(int a = 0; a < x; a++) { //prepares arrays
       for(int b = 0; b < y; b++) {
         gameInfo[a][b] = " ";
-        UI[a][b] = " ";
+        UI[a][b] = "O";
       }
     }
 
@@ -110,8 +110,18 @@ public class MinesweeperTextVer {
   }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
+    if(y == 8) {
+      System.out.println("A# A B C D E F G H");
+    } else if (y == 16) {
+      System.out.println("A# A B C D E F G H I J L M N O P Q");
+    }
     for(int a = 0; a < x; a++) {
       String print = "";
+      if(a < 9) {
+        print = "0" + (a + 1) + " ";
+      } else {
+        print = (a + 1) + " ";
+      }
       for(int b = 0; b < y; b++) {
         print = print + gameInfo[a][b] + " ";
       }
