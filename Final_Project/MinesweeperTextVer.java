@@ -44,16 +44,49 @@ public class MinesweeperTextVer {
   }
 
   public static void setup(int x, int y, int mines, String[][] gameInfo, String[][] UI) { //?sets up arrays
-    for(int a = 0; a < x; a++) { //prepares arrays
+    for(int a = 0; a < x; a++) { //prepares UI
       for(int b = 0; b < y; b++) {
-        gameInfo[a][b] = " ";
         UI[a][b] = "O";
       }
     }
 
+    System.out.println("\nChoose a cell to start in (ex: C08):\n");
+    String inputStr = scan1.next();
+    int a = coordX(inputStr);
+    int b = coordY(inputStr);
+    int a1, b1, a2, b2;
+    if(a == 0) {
+      a1 = 0;
+    } else {
+      a1 = a - 1;
+    } 
+    if(b == 0) {
+      b1 = 0;
+    } else {
+      b1 = b - 1;
+    } 
+    if(a == x - 1) {
+      a2 = x - 1;
+    } else {
+      a2 = a + 1;
+    } 
+    if(b == y - 1) {
+      b2 = y - 1;
+    } else {
+      b2 = b + 1;
+    }
+
+    for(a = 0; a < x; a++) { //prepares gameInfo
+      for(b = 0; b < y; b++) {
+        if(gameInfo[a][b] != "X") {
+          gameInfo[a][b] = " ";
+        }
+      }
+    }
+
     for(int c = 0; c < mines; c++) { //places mines
-      int a = rand.nextInt(x);
-      int b = rand.nextInt(y);
+      a = rand.nextInt(x);
+      b = rand.nextInt(y);
       if(gameInfo[a][b] == " ") {
         gameInfo[a][b] = "*";
       } else {
@@ -61,10 +94,9 @@ public class MinesweeperTextVer {
       }
     }
     
-    for(int a = 0; a < x; a++) { //places number values
-      for(int b = 0; b < y; b++) {
+    for(a = 0; a < x; a++) { //places number values
+      for(b = 0; b < y; b++) {
         if(gameInfo[a][b] != "*") {
-          int a1, b1, a2, b2;
           if(a == 0) {
             a1 = 0;
           } else {
@@ -94,6 +126,13 @@ public class MinesweeperTextVer {
           gameInfo[a][b] = countHold;
         }
       }
+    }
+  }
+
+  public static void setStart(int a1, int a2, int b1, int b2, String[][] gameInfo) { //?sets up gameInfo to ensure start area is safe
+    for (int x = a1; x <= a2; x++) {
+      for (int y = b1; x <= b2; y++) {
+        gameInfo[x][y] = "X";
     }
   }
 
@@ -178,6 +217,10 @@ public class MinesweeperTextVer {
       }
       System.out.println(print);
     }
+  }
+
+  public static void gameOver () { //? sets up gameover display
+
   }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
