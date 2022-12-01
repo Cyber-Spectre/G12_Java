@@ -41,6 +41,7 @@ public class MinesweeperTextVer {
     
     do { 
       displayUI(x, y, UI);
+      display();
       input = scan1.nextInt();
 
       switch(input) {
@@ -58,7 +59,7 @@ public class MinesweeperTextVer {
           flag(coordX(inputStr), coordY(inputStr), UI);
           break;
         case 3:
-          
+
           break;
         case 4:
           displayLegend();
@@ -101,7 +102,7 @@ public class MinesweeperTextVer {
       a = rand.nextInt(x);
       b = rand.nextInt(y);
       if(gameInfo[a][b] == " ") {
-        gameInfo[a][b] = "•";
+        gameInfo[a][b] = "*";
       } else {
         c--;
       }
@@ -156,7 +157,7 @@ public class MinesweeperTextVer {
     int count = 0;
     for(int x = a1; x <= a2; x++) {
       for(int y = b1; y <= b2; y++) {
-        if(gameInfo[x][y] == "•") {
+        if(gameInfo[x][y] == "*") {
           count++;
         }
       }
@@ -210,7 +211,7 @@ public class MinesweeperTextVer {
   public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo) {
     if(UI[a][b] == "■") {
       UI[a][b] = gameInfo[a][b];
-      if(gameInfo[a][b] == "•") {
+      if(gameInfo[a][b] == "*") {
         gameOver(false);
       }
       if(gameInfo[a][b] == " ") {
@@ -222,17 +223,13 @@ public class MinesweeperTextVer {
           }
         }
       }
-    } else if(UI[a][b] == "◙") {
-      System.out.println("That cell has a flag on it\n");
-    } else {
-      System.out.println("That is not a valid cell for revealing\n");
     }
   }
 
   public static void flag(int x, int y, String[][] UI) { //?flags a cell to avoid revealing and to scan
     if(UI[x][y] == "■") {
-      UI[x][y] = "◙";
-    } else if(UI[x][y] == "◙") {
+      UI[x][y] = "F";
+    } else if(UI[x][y] == "F") {
       UI[x][y] = "■";
     } else {
       System.out.println("That is not a valid cell for flagging\n");
@@ -284,11 +281,11 @@ public class MinesweeperTextVer {
   public static void displayLegend() { //?displays legend explaining symbol meanings
       System.out.println("Icon Legend:\n"
         + "|■: Hidden cell\n"
-        + "|•: Mine\n"
-        + "|◙: Flag\n"
+        + "|*: Mine\n"
+        + "|F: Flag\n"
         + "End Game Legend:\n"
-        + "|☻: Correct Flag\n"
-        + "|☺: Incorrect Flag\n");
+        + "|+: Correct Flag\n"
+        + "|-: Incorrect Flag\n");
     }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
