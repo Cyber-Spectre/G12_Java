@@ -37,9 +37,33 @@ public class MinesweeperTextVer {
     String[][] gameInfo = new String[x][y]; //store game information
     String[][] UI = new String[x][y]; //interface for user
     setup(x, y, mines, gameInfo, UI);
-    System.out.println("Please check the icon legend so you know what all the symbols mean\n");
-    do { 
+    System.out.println("\nPlease check the icon legend so you know what all the symbols mean\n");
     
+    do { 
+      displayUI(x, y, UI);
+      input = scan1.nextInt();
+
+      switch(input) {
+        case 0:
+          System.exit(0);
+          break;
+        case 1:
+          System.out.println("\nChoose a cell to reveal (ex: C08):");
+          inputStr = scan1.next();
+          reveal(x, y, coordX(inputStr), coordY(inputStr), UI, gameInfo);
+          break;
+        case 2:
+          System.out.println("\nChoose a cell to flag (ex: C08):");
+          inputStr = scan1.next();
+          flag(coordX(inputStr), coordY(inputStr), UI);
+          break;
+        case 3:
+          
+          break;
+        case 4:
+          displayLegend();
+          break;
+      }
     } while(true);
   }
 
@@ -53,7 +77,7 @@ public class MinesweeperTextVer {
 
     displayUI(x, y, UI);
 
-    System.out.println("\nChoose a cell to start in (ex: C08):\n");
+    System.out.println("\nChoose a cell to start in (ex: C08):");
     String inputStr = scan1.next();
     int borderX = coordX(inputStr);
     int borderY = coordY(inputStr);
@@ -72,7 +96,6 @@ public class MinesweeperTextVer {
         }
       }
     }
-    displayInfo(x, y, gameInfo);
 
     for(int c = 0; c < mines; c++) { //places mines
       a = rand.nextInt(x);
@@ -199,15 +222,35 @@ public class MinesweeperTextVer {
           }
         }
       }
+    } else if(UI[a][b] == "◙") {
+      System.out.println("That cell has a flag on it\n");
+    } else {
+      System.out.println("That is not a valid cell for revealing\n");
     }
   }
 
-  public static void flag() {
+  public static void flag(int x, int y, String[][] UI) { //?flags a cell to avoid revealing and to scan
+    if(UI[x][y] == "■") {
+      UI[x][y] = "◙";
+    } else if(UI[x][y] == "◙") {
+      UI[x][y] = "■";
+    } else {
+      System.out.println("That is not a valid cell for flagging\n");
+    }
+  }
+
+  public static void scan(int x, int y, String[][] UI) { //?scans surrounding cells to check if number of flags or remaining cells equal cell value
 
   }
 
   public static void display() {
-    
+    System.out.println("\n"
+      + "Please select an option:\n"
+      + "0: Exit game\n"
+      + "1: Reveal cell\n"
+      + "2: Flag/unflag cell\n"
+      + "3: Scan cell\n"
+      + "4: Icon legend");
   }
 
   public static void displayUI(int x, int y, String[][] UI) { //? displays User Interface
@@ -238,11 +281,11 @@ public class MinesweeperTextVer {
     }
   }
 
-  public static void displayLegend() { //
+  public static void displayLegend() { //?displays legend explaining symbol meanings
       System.out.println("Icon Legend:\n"
         + "|■: Hidden cell\n"
         + "|•: Mine\n"
-        + "|⌂: Flag\n"
+        + "|◙: Flag\n"
         + "End Game Legend:\n"
         + "|☻: Correct Flag\n"
         + "|☺: Incorrect Flag\n");
@@ -269,5 +312,4 @@ public class MinesweeperTextVer {
 
   }
 
-  
 }
