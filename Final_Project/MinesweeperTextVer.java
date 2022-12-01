@@ -39,7 +39,21 @@ public class MinesweeperTextVer {
     setup(x, y, mines, gameInfo, UI);
     System.out.println("Please check the icon legend so you know what all the symbols mean\n");
     do { 
-    
+      displayUI(x, y, UI);
+      input = scan1.nextInt();
+
+      switch(input) {
+        case 0:
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+      }
     } while(true);
   }
 
@@ -78,7 +92,7 @@ public class MinesweeperTextVer {
       a = rand.nextInt(x);
       b = rand.nextInt(y);
       if(gameInfo[a][b] == " ") {
-        gameInfo[a][b] = "•";
+        gameInfo[a][b] = "*";
       } else {
         c--;
       }
@@ -117,8 +131,7 @@ public class MinesweeperTextVer {
         }
       }
     }
-
-    reveal(x, y, borderX, borderY, UI, gameInfo);
+    reveal(x, y, borderX, borderY, UI, gameInfo, false);
   }
 
   public static void setStart(int a1, int a2, int b1, int b2, String[][] gameInfo) { //?sets up gameInfo to ensure start area is safe
@@ -184,30 +197,46 @@ public class MinesweeperTextVer {
     } 
   }
 
-  public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo) {
+  public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo, boolean rerun) { //?reveals cell, if empty, reveal surrounding cells, if mine, run gameOver as false
     if(UI[a][b] == "■") {
       UI[a][b] = gameInfo[a][b];
-      if(gameInfo[a][b] == "•") {
+      if(gameInfo[a][b] == "*") {
         gameOver(false);
       }
       if(gameInfo[a][b] == " ") {
         for(int c = 0; c < x; c++) { //places number values
           for(int d = 0; d < y; d++) {
             if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
-              reveal(x, y, c, d, UI, gameInfo);
+              reveal(x, y, c, d, UI, gameInfo, true);
             }
           }
         }
       }
+    } else if(!rerun){
+      if(UI[a][b] == "■") {
+        System.out.println("You cannot reveal a flagged cell\n");
+      } else {
+        System.out.println("That cell is already revealed\n");
+      }
     }
   }
 
-  public static void flag() {
+  public static void flag(int x, int y, String [][] UI) { //?flags a cell for scanning and to prevent revealing
+
+  }
+
+  public static void scan() { //?scans surrounding cells and reveals if flags or remaining cells match cell value
 
   }
 
   public static void display() {
-    
+    System.out.println("\n"
+      + "Please select an option:\n"
+      + "0: Exit game\n"
+      + "1: Reveal cell\n"
+      + "2: Flag cell\n"
+      + "3: Scan cell\n"
+      + "4: Icon legend");
   }
 
   public static void displayUI(int x, int y, String[][] UI) { //? displays User Interface
@@ -238,14 +267,14 @@ public class MinesweeperTextVer {
     }
   }
 
-  public static void displayLegend() { //
+  public static void displayLegend() { //?displays a legend explaining the meaning of game symbols
       System.out.println("Icon Legend:\n"
         + "|■: Hidden cell\n"
-        + "|•: Mine\n"
-        + "|⌂: Flag\n"
+        + "|*: Mine\n"
+        + "|F: Flag\n"
         + "End Game Legend:\n"
-        + "|☻: Correct Flag\n"
-        + "|☺: Incorrect Flag\n");
+        + "|+: Correct Flag\n"
+        + "|-: Incorrect Flag\n");
     }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
@@ -269,5 +298,4 @@ public class MinesweeperTextVer {
 
   }
 
-  
 }
