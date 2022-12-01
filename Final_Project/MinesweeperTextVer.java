@@ -37,7 +37,7 @@ public class MinesweeperTextVer {
     String[][] gameInfo = new String[x][y]; //store game information
     String[][] UI = new String[x][y]; //interface for user
     setup(x, y, mines, gameInfo, UI);
-    displayInfo(x, y, gameInfo);
+    System.out.println("Please check the icon legend so you know what all the symbols mean\n");
     do { 
     
     } while(true);
@@ -47,7 +47,7 @@ public class MinesweeperTextVer {
     int a, b, a1, a2, b1, b2;
     for(a = 0; a < x; a++) { //prepares UI
       for(b = 0; b < y; b++) {
-        UI[a][b] = "O";
+        UI[a][b] = "■";
       }
     }
 
@@ -78,7 +78,7 @@ public class MinesweeperTextVer {
       a = rand.nextInt(x);
       b = rand.nextInt(y);
       if(gameInfo[a][b] == " ") {
-        gameInfo[a][b] = "*";
+        gameInfo[a][b] = "•";
       } else {
         c--;
       }
@@ -133,7 +133,7 @@ public class MinesweeperTextVer {
     int count = 0;
     for(int x = a1; x <= a2; x++) {
       for(int y = b1; y <= b2; y++) {
-        if(gameInfo[x][y] == "*") {
+        if(gameInfo[x][y] == "•") {
           count++;
         }
       }
@@ -185,51 +185,25 @@ public class MinesweeperTextVer {
   }
 
   public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo) {
-    String isRevealed = "";
-    for(int c = 0; c < x; c++) { //places number values
-      for(int d = 0; d < y; d++) {
-        if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
-          UI[c][d] = gameInfo[c][d];
-          if(UI[c][d] == " " && !isRevealed(c, d, isRevealed)) {
-            isRevealed = isRevealed + "(" + c + " " + d + ")";
-            reveal(x, y, c, d, UI, gameInfo, isRevealed);
+    if(UI[a][b] == "■") {
+      UI[a][b] = gameInfo[a][b];
+      if(gameInfo[a][b] == "•") {
+        gameOver(false);
+      }
+      if(gameInfo[a][b] == " ") {
+        for(int c = 0; c < x; c++) { //places number values
+          for(int d = 0; d < y; d++) {
+            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
+              reveal(x, y, c, d, UI, gameInfo);
+            }
           }
         }
       }
     }
   }
 
-  public static boolean isRevealed(int c, int d, String isRevealed) {
-    for(int x = 0; x > isRevealed.length();) {
-    String xCheck = "";
-    String yCheck = "";
-    int xVal;
-    int yVal;
-      if(isRevealed.charAt(x) != '(') {
-        x++;
-      } else {
-        for(int y = (x + 1); isRevealed.charAt(y) != ' ';) {
-          xCheck = xCheck + isRevealed.charAt(y);
-          x++;
-        }
-        xVal = Integer.valueOf(xCheck.substring(0));
-        for(int y = (x + 1); isRevealed.charAt(y) != ')';) {
-          yCheck = yCheck + isRevealed.charAt(y);
-          x++;
-        }
-        yVal = Integer.valueOf(yCheck.substring(0));
-        if(xVal == c && yVal == d) {
-          return true;
-        } else {
-          x++;
-        }
-      }
-    }
-    return false;
-  }
+  public static void flag() {
 
-  public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo, String alrRevealed) {
-    
   }
 
   public static void display() {
@@ -240,7 +214,7 @@ public class MinesweeperTextVer {
     if(y == 8) {
       System.out.println("   A B C D E F G H");
     } else if (y == 16) {
-      System.out.println("   A B C D E F G H I J L M N O P Q");
+      System.out.println("   A B C D E F G H I J K L M N O P");
     }
     for(int a = 0; a < x; a++) {
       String print = "";
@@ -256,9 +230,23 @@ public class MinesweeperTextVer {
     }
   }
 
-  public static void gameOver () { //? sets up gameover display
+  public static void gameOver(boolean didWin) { //?runs when player hits a bomb or flags all bombs
+    if(didWin) {
 
+    } else {
+
+    }
   }
+
+  public static void displayLegend() { //
+      System.out.println("Icon Legend:\n"
+        + "|■: Hidden cell\n"
+        + "|•: Mine\n"
+        + "|⌂: Flag\n"
+        + "End Game Legend:\n"
+        + "|☻: Correct Flag\n"
+        + "|☺: Incorrect Flag\n");
+    }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
     if(y == 8) {
@@ -278,6 +266,8 @@ public class MinesweeperTextVer {
       }
       System.out.println(print);
     }
+
   }
 
+  
 }
