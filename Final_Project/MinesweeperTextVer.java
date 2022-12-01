@@ -37,21 +37,44 @@ public class MinesweeperTextVer {
     String[][] gameInfo = new String[x][y]; //store game information
     String[][] UI = new String[x][y]; //interface for user
     setup(x, y, mines, gameInfo, UI);
-    System.out.println("Please check the icon legend so you know what all the symbols mean\n");
+    System.out.println("Please check the rules so you know what the symbols mean and how to win");
     do { 
+      int flagCount = 0;
+      for(int c = 0; c < x; c++) {
+        for(int d = 0; d < y; d++) {
+          if(UI[c][d] == "F") {
+            flagCount++;
+          }
+        }
+      }
+      if(flagCount == mines) {
+        checkWin(x, y, flagCount, mines, UI, gameInfo);
+      }
+
+      System.out.println("\n");
+      System.out.println((mines - flagCount) + " mines left");
       displayUI(x, y, UI);
+      display();
       input = scan1.nextInt();
 
       switch(input) {
         case 0:
+          System.exit(0);
           break;
         case 1:
+          System.out.println("Input the cell you want to reveal:");
+          inputStr = scan1.next();
+          reveal(x, y, coordX(inputStr), coordY(inputStr), UI, gameInfo, true);
           break;
         case 2:
+          System.out.println("Input the cell you want to reveal:");
+          inputStr = scan1.next();
+          flag(coordX(inputStr), coordY(inputStr), UI, false);
           break;
         case 3:
           break;
         case 4:
+          displayRules();
           break;
       }
     } while(true);
@@ -146,7 +169,7 @@ public class MinesweeperTextVer {
     int count = 0;
     for(int x = a1; x <= a2; x++) {
       for(int y = b1; y <= b2; y++) {
-        if(gameInfo[x][y] == "•") {
+        if(gameInfo[x][y] == "*") {
           count++;
         }
       }
@@ -197,36 +220,86 @@ public class MinesweeperTextVer {
     } 
   }
 
-  public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo, boolean rerun) { //?reveals cell, if empty, reveal surrounding cells, if mine, run gameOver as false
+  public static void reveal(int x, int y, int a, int b, String[][] UI, String[][] gameInfo, boolean userRun) { //?reveals cell, if empty, reveal surrounding cells, if mine, run gameOver as false
     if(UI[a][b] == "■") {
       UI[a][b] = gameInfo[a][b];
       if(gameInfo[a][b] == "*") {
         gameOver(false);
       }
       if(gameInfo[a][b] == " ") {
-        for(int c = 0; c < x; c++) { //places number values
+        for(int c = 0; c < x; c++) {
           for(int d = 0; d < y; d++) {
             if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
-              reveal(x, y, c, d, UI, gameInfo, true);
+              reveal(x, y, c, d, UI, gameInfo, false);
             }
           }
         }
       }
-    } else if(!rerun){
-      if(UI[a][b] == "■") {
-        System.out.println("You cannot reveal a flagged cell\n");
+    } else if(userRun) {
+      if(UI[a][b] == "F") {
+        System.out.println("You cannot reveal a flagged cell");
       } else {
-        System.out.println("That cell is already revealed\n");
+        System.out.println("That cell is already revealed");
       }
     }
   }
 
-  public static void flag(int x, int y, String [][] UI) { //?flags a cell for scanning and to prevent revealing
-
+  public static void flag(int x, int y, String[][] UI, boolean userRun) { //?flags a cell for scanning and to prevent revealing, if already a flag, unflag
+    if(UI[x][y] == "■") {
+      UI[x][y] = "F";
+    } else if(UI[x][y] == "F") {
+      UI[x][y] = "■";
+    } else {
+      if(userRun) {
+        System.out.println("You cannot flag revealed cells");
+      }
+    }
   }
 
-  public static void scan() { //?scans surrounding cells and reveals if flags or remaining cells match cell value
-
+  public static void scan(int x, int y, int a, int b, String[][] UI, String[][] gameInfo) { //?scans surrounding cells and reveals if flags or remaining cells match cell value
+    int cellCount = 0;
+    int flagCount = 0;
+    int totalCount = 0;
+    if((UI[a][b] != "■") && (UI[a][b] != "F")) {
+      for(int c = 0; c < x; c++) {
+        for(int d = 0; d < y; d++) {
+          if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
+            if(UI[c][d] == "F") {
+              flagCount++;
+              totalCount++;
+            } else if(UI[c][d] == "■") {
+              cellCount++;
+              totalCount++;
+            }
+          }
+        }
+      }
+      if((Integer.valueOf(UI[a][b]) == cellCount) || (Integer.valueOf(UI[a][b]) == totalCount)) {
+        for(int c = 0; c < x; c++) {
+          for(int d = 0; d < y; d++) {
+            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
+              if(UI[c][d] == "■") {
+                flag(c, d, UI, false);
+              }
+            }
+          }
+        }
+      } else if(Integer.valueOf(UI[a][b]) == flagCount) {
+        for(int c = 0; c < x; c++) {
+          for(int d = 0; d < y; d++) {
+            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
+              if(UI[c][d] == "■") {
+                reveal(x, y, c, d, UI, gameInfo, false);
+              }
+            }
+          }
+        }
+      } else {
+        System.out.println("Scan inconclusive");
+      }
+    } else {
+      System.out.println("You can only scan revealed cells");
+    }
   }
 
   public static void display() {
@@ -234,9 +307,9 @@ public class MinesweeperTextVer {
       + "Please select an option:\n"
       + "0: Exit game\n"
       + "1: Reveal cell\n"
-      + "2: Flag cell\n"
+      + "2: Flag/unflag cell\n"
       + "3: Scan cell\n"
-      + "4: Icon legend");
+      + "4: Game rules");
   }
 
   public static void displayUI(int x, int y, String[][] UI) { //? displays User Interface
@@ -259,6 +332,10 @@ public class MinesweeperTextVer {
     }
   }
 
+  public static void checkWin(int x, int y, int flagCount, int mines, String[][] UI, String[][] gameInfo) {
+
+  }
+
   public static void gameOver(boolean didWin) { //?runs when player hits a bomb or flags all bombs
     if(didWin) {
 
@@ -267,14 +344,16 @@ public class MinesweeperTextVer {
     }
   }
 
-  public static void displayLegend() { //?displays a legend explaining the meaning of game symbols
-      System.out.println("Icon Legend:\n"
+  public static void displayRules() { //?displays a legend explaining the meaning of game symbols
+      System.out.println("\nGame Rules:\n"
+        + "To win, you need to flag every bomb, if you have the correct number of flags but you don't win, at least 1 flag is incorrect. If you reveal a mine, you lose, and all mines will reveal and flags will tell you if you were correct.\n"
+        + "Icon Legend:\n"
         + "|■: Hidden cell\n"
         + "|*: Mine\n"
         + "|F: Flag\n"
         + "End Game Legend:\n"
         + "|+: Correct Flag\n"
-        + "|-: Incorrect Flag\n");
+        + "|-: Incorrect Flag");
     }
 
   public static void displayInfo(int x, int y, String[][] gameInfo) { //!displays gameInfo (testing only)
