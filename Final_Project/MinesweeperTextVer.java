@@ -52,7 +52,12 @@ public class MinesweeperTextVer {
       }
 
       System.out.println("\n");
-      System.out.println((mines - flagCount) + " mines left");
+      if(mines - flagCount <= 0) {
+        System.out.println((mines - flagCount) + " mines left (at least " + (Math.abs(mines - flagCount) + 1) + " incorrect)");
+      } else {
+        System.out.println((mines - flagCount) + " mines left");
+
+      }
       displayUI(x, y, UI);
       display();
       input = scan1.nextInt();
@@ -69,10 +74,10 @@ public class MinesweeperTextVer {
         case 2: //flag
           System.out.println("Input the cell you want to flag/unflag:");
           inputStr = scan1.next();
-          flag(coordX(inputStr), coordY(inputStr), UI, false);
+          flag(coordX(inputStr), coordY(inputStr), UI, true);
           break;
         case 3: //scan
-          System.out.println("Input the cell you want to flag/unflag:");
+          System.out.println("Input the cell you want to scan:");
           inputStr = scan1.next();
           scan(x, y, coordX(inputStr), coordY(inputStr), UI, gameInfo);
           break;
@@ -93,7 +98,7 @@ public class MinesweeperTextVer {
 
     displayUI(x, y, UI);
 
-    System.out.println("\nChoose a cell to start in (ex: C08):");
+    System.out.println("\nChoose a cell to start in (ex: C08(letter can be lowercase)):");
     String inputStr = scan1.next();
     int borderX = coordX(inputStr);
     int borderY = coordY(inputStr);
@@ -185,6 +190,7 @@ public class MinesweeperTextVer {
   }
 
   public static int coordY(String input) { //?returns Y coordinate
+    input = input.toUpperCase();
     char yChar = input.charAt(0);
 
     if(yChar == 'A') {
@@ -262,7 +268,7 @@ public class MinesweeperTextVer {
     int cellCount = 0;
     int flagCount = 0;
     int totalCount = 0;
-    if((UI[a][b] != "■") && (UI[a][b] != "F")) {
+    if((UI[a][b] != "■") && (UI[a][b] != "F") && (UI[a][b] != " ")) {
       for(int c = 0; c < x; c++) {
         for(int d = 0; d < y; d++) {
           if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
@@ -310,7 +316,12 @@ public class MinesweeperTextVer {
         System.out.println("Scan inconclusive");
       }
     } else {
-      System.out.println("You can only scan revealed cells");
+      if(UI[a][b] == " ") {
+        System.out.println("This cell has no number value");
+      } else {
+        System.out.println("You can only scan revealed cells");
+      }
+      
     }
   }
 
@@ -362,7 +373,7 @@ public class MinesweeperTextVer {
 
   public static void gameOver(boolean didWin, int x, int y, String[][] UI, String[][] gameInfo) { //?runs when player hits a bomb or flags all bombs
     if(didWin) { //if won
-      System.out.println("You have flagged all mines and have won!");
+      System.out.println("\nYou have flagged all mines and have won!");
       displayUI(x, y, UI);
       System.exit(0);
     } else { //if lost
@@ -386,6 +397,7 @@ public class MinesweeperTextVer {
       System.out.println("You hit a mine and lost!\n"
         + "You got " + correctFlags + " flags correct");
         displayUI(x, y, UI);
+        System.exit(0);
     }
   }
 
