@@ -48,7 +48,7 @@ public class MinesweeperTextVer {
         }
       }
       if(flagCount == mines) {
-        checkWin(x, y, flagCount, mines, UI, gameInfo);
+        checkWin(x, y, flagCount, UI, gameInfo);
       }
 
       System.out.println("\n");
@@ -58,22 +58,25 @@ public class MinesweeperTextVer {
       input = scan1.nextInt();
 
       switch(input) {
-        case 0:
+        case 0: //exit
           System.exit(0);
           break;
-        case 1:
+        case 1: //reveal
           System.out.println("Input the cell you want to reveal:");
           inputStr = scan1.next();
           reveal(x, y, coordX(inputStr), coordY(inputStr), UI, gameInfo, true);
           break;
-        case 2:
-          System.out.println("Input the cell you want to reveal:");
+        case 2: //flag
+          System.out.println("Input the cell you want to flag/unflag:");
           inputStr = scan1.next();
           flag(coordX(inputStr), coordY(inputStr), UI, false);
           break;
-        case 3:
+        case 3: //scan
+          System.out.println("Input the cell you want to flag/unflag:");
+          inputStr = scan1.next();
+          scan(x, y, coordX(inputStr), coordY(inputStr), UI, gameInfo);
           break;
-        case 4:
+        case 4: //rules
           displayRules();
           break;
       }
@@ -223,7 +226,7 @@ public class MinesweeperTextVer {
     if(UI[a][b] == "■") {
       UI[a][b] = gameInfo[a][b];
       if(gameInfo[a][b] == "*") {
-        gameOver(false);
+        gameOver(false, x, y, UI, gameInfo);
       }
       if(gameInfo[a][b] == " ") {
         for(int c = 0; c < x; c++) {
@@ -273,7 +276,7 @@ public class MinesweeperTextVer {
           }
         }
       }
-      if((Integer.valueOf(UI[a][b]) == cellCount) || (Integer.valueOf(UI[a][b]) == totalCount)) {
+      if(Integer.valueOf(UI[a][b]) == totalCount) {
         for(int c = 0; c < x; c++) {
           for(int d = 0; d < y; d++) {
             if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
@@ -289,6 +292,16 @@ public class MinesweeperTextVer {
             if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
               if(UI[c][d] == "■") {
                 reveal(x, y, c, d, UI, gameInfo, false);
+              }
+            }
+          }
+        }
+      } else if(Integer.valueOf(UI[a][b]) == cellCount) {
+        for(int c = 0; c < x; c++) {
+          for(int d = 0; d < y; d++) {
+            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
+              if(UI[c][d] == "■") {
+                flag(c, d, UI, false);
               }
             }
           }
@@ -331,15 +344,48 @@ public class MinesweeperTextVer {
     }
   }
 
-  public static void checkWin(int x, int y, int flagCount, int mines, String[][] UI, String[][] gameInfo) {
-
+  public static void checkWin(int x, int y, int flagCount, String[][] UI, String[][] gameInfo) {
+    int correctFlags = 0;
+    for(int c = 0; c < x; c++) {
+      for(int d = 0; d < y; d++) {
+        if(UI[c][d] == "F") {
+          if(gameInfo[c][d] == "*") {
+            correctFlags++;
+          }
+        }
+      }
+    }
+    if(correctFlags == flagCount) {
+      gameOver(true, x, y, UI, gameInfo);
+    }
   }
 
-  public static void gameOver(boolean didWin) { //?runs when player hits a bomb or flags all bombs
-    if(didWin) {
-
-    } else {
-
+  public static void gameOver(boolean didWin, int x, int y, String[][] UI, String[][] gameInfo) { //?runs when player hits a bomb or flags all bombs
+    if(didWin) { //if won
+      System.out.println("You have flagged all mines and have won!");
+      displayUI(x, y, UI);
+      System.exit(0);
+    } else { //if lost
+      int correctFlags = 0;
+      for(int c = 0; c < x; c++) {
+        for(int d = 0; d < y; d++) {
+          if(UI[c][d] == "■") {
+            if(gameInfo[c][d] == "*") {
+              UI[c][d] = gameInfo[c][d];
+            }
+          } else if(UI[c][d] == "F") {
+            if(gameInfo[c][d] == "*") {
+              UI[c][d] = "+";
+              correctFlags++;
+            } else {
+              UI[c][d] = "-";
+            }
+          }
+        }
+      }
+      System.out.println("You hit a mine and lost!\n"
+        + "You got " + correctFlags + " flags correct");
+        displayUI(x, y, UI);
     }
   }
 
