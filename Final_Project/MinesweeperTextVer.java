@@ -53,7 +53,11 @@ public class MinesweeperTextVer {
 
       System.out.println("\n");
       if(mines - flagCount <= 0) {
-        System.out.println((mines - flagCount) + " mines left (at least " + (Math.abs(mines - flagCount) + 1) + " incorrect)");
+        if(mines - flagCount <= -2) {
+          System.out.println((mines - flagCount) + " mines left (at least " + (Math.abs(mines - flagCount) + 1) + " incorrect)");
+        } else {
+          System.out.println((mines - flagCount) + " mines left (at least 1 incorrect)");
+        }
       } else {
         System.out.println((mines - flagCount) + " mines left");
 
