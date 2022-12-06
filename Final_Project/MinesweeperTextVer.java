@@ -269,49 +269,23 @@ public class MinesweeperTextVer {
   }
 
   public static void scan(int x, int y, int a, int b, String[][] UI, String[][] gameInfo) { //?scans surrounding cells and reveals if flags or remaining cells match cell value
-    int cellCount = 0;
     int flagCount = 0;
-    int totalCount = 0;
     if((UI[a][b] != "■") && (UI[a][b] != "F") && (UI[a][b] != " ")) {
       for(int c = 0; c < x; c++) {
         for(int d = 0; d < y; d++) {
           if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
             if(UI[c][d] == "F") {
               flagCount++;
-              totalCount++;
-            } else if(UI[c][d] == "■") {
-              cellCount++;
-              totalCount++;
             }
           }
         }
       }
-      if(Integer.valueOf(UI[a][b]) == totalCount) {
-        for(int c = 0; c < x; c++) {
-          for(int d = 0; d < y; d++) {
-            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
-              if(UI[c][d] == "■") {
-                flag(c, d, UI, false);
-              }
-            }
-          }
-        }
-      } else if(Integer.valueOf(UI[a][b]) == flagCount) {
+      if(Integer.valueOf(UI[a][b]) == flagCount) {
         for(int c = 0; c < x; c++) {
           for(int d = 0; d < y; d++) {
             if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
               if(UI[c][d] == "■") {
                 reveal(x, y, c, d, UI, gameInfo, false);
-              }
-            }
-          }
-        }
-      } else if(Integer.valueOf(UI[a][b]) == cellCount) {
-        for(int c = 0; c < x; c++) {
-          for(int d = 0; d < y; d++) {
-            if((c >= (a - 1) && c <= (a + 1)) && (d >= (b - 1) && d <= (b + 1))) {
-              if(UI[c][d] == "■") {
-                flag(c, d, UI, false);
               }
             }
           }
