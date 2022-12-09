@@ -53,7 +53,7 @@ public class AP3 {
 
   public static void numComb(int n, int r){
     //?finds how many combinations can be made from r objects and n choices
-    //*c = [n! / (r!(n - r)!)]
+    //*c = n! / r!(n - r)!
     int c;
     if(r < n){
       if(n >= 1 && n <= 12){
