@@ -42,6 +42,7 @@ public class APList {
     }
     System.out.println(movies.get(0) + "\n" + movies.get(1));
 
+    boolean[] isBest = new boolean[friends.size()];
     ArrayList<String> best = new ArrayList<String>();
     System.out.println("What friends would you like to add to your best friends list? Input their number value and enter 0 when done:");
     int inputInt;
@@ -51,6 +52,7 @@ public class APList {
       if(inputInt == 0) {
         rerun = false;
       } else {
+        isBest[inputInt] = true;
         best.add(friends.get(inputInt - 1));
       }
     }
