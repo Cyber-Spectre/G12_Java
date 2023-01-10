@@ -1,6 +1,6 @@
 package Final_Project.minesweeper.src.main.java.com.example;
 
-//?https://www.youtube.com/playlist?list=PLGxHvpw-PAk6QvPw0fYe8bks31GRKvymK
+//* https://www.youtube.com/playlist?list=PLGxHvpw-PAk6QvPw0fYe8bks31GRKvymK
 
 public class Main implements Runnable {
 
